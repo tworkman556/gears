@@ -600,6 +600,12 @@ module planetary_gear(modul, sun_teeth, planet_teeth, number_planets, width, rim
     center_distance = modul*(sun_teeth +  planet_teeth) / 2;        // Distance from Sun- or Ring-Gear Axis to Planet Axis
     ring_teeth = sun_teeth + 2*planet_teeth;              // Number of Teeth of the Ring Gear
     d_ring = modul*ring_teeth;                                 // Ring Pitch Circle Diameter
+    
+    if(number_planets==0){
+        mesh_check_val = (ring_teeth-sun_teeth)/number_planets;     // get value for whether the planets will mesh
+        will_mesh = round(mesh_check_val)==mesh_check_val;           // check that the value is an integer - will mesh only if integer
+        assert(will_mesh, "((ring_teeth - sun_teeth) / number_planets) must be an integer value for planets to mesh properly");
+    }
 
     rotate = is_even(planet_teeth);                                // Does the Sun Gear need to be rotated?
 
